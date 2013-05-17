@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <title>Bumbler to Speech</title>
-  <link rel="stylesheet" type="text/css" href="stylesheets/styles.css">
+  <link rel="stylesheet" type="text/css" href="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.1/css/bootstrap-combined.min.css">
 </head>
 <body>
   <div class="container">
@@ -11,6 +11,9 @@
     <p class="lead">
       「他不笨，他是馬邦伯！」的確我們發現馬邦伯真的不笨，因為他可以從一數到十。為了推廣邦伯的數數能力，我們製作了這個線上數數器，只要輸入數字、就可以由馬邦伯幫你念出來！
     </p>
+
+    <div class="fb-like" data-href="http://zhusee2.github.io/bumbler-to-speech/" data-send="true" data-width="450" data-show-faces="false"></div>
+
     <div class="well">
       <audio id="ma-speech" src="audio/one-to-ten.mp3" controls></audio>
     </div>
@@ -26,7 +29,16 @@
     </footer>
   </div>
 
-  <script src="javascripts/jquery-2.0.0.min.js"></script>
+  <div id="fb-root"></div>
+  <script>(function(d, s, id) {
+    var js, fjs = d.getElementsByTagName(s)[0];
+    if (d.getElementById(id)) return;
+    js = d.createElement(s); js.id = id;
+    js.src = "//connect.facebook.net/zh_TW/all.js#xfbml=1&appId=299463133493553";
+    fjs.parentNode.insertBefore(js, fjs);
+  }(document, 'script', 'facebook-jssdk'));</script>
+
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
   <script src="javascripts/application.js"></script>
 </body>
 </html>
