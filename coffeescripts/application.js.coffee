@@ -54,6 +54,7 @@ class BumblerSpeech
     queueIterate()
 
   numberToSpeechQueue: (number) ->
+    return ["thank"] if number is "thank"
     return false if number >= 100 or number < 1
 
     queueArray = []
@@ -114,6 +115,7 @@ $ ->
 
     if numberToPlay
       speaker.numberQueue = [1..numberToPlay]
+      speaker.numberQueue.push "thank"
       speaker.play()
 
     event.preventDefault()

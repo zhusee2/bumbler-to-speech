@@ -103,6 +103,9 @@
 
     BumblerSpeech.prototype.numberToSpeechQueue = function(number) {
       var digit1, digit10, queueArray;
+      if (number === "thank") {
+        return ["thank"];
+      }
       if (number >= 100 || number < 1) {
         return false;
       }
@@ -188,6 +191,7 @@
           for (var _j = 1; 1 <= numberToPlay ? _j <= numberToPlay : _j >= numberToPlay; 1 <= numberToPlay ? _j++ : _j--){ _results1.push(_j); }
           return _results1;
         }).apply(this);
+        speaker.numberQueue.push("thank");
         speaker.play();
       }
       return event.preventDefault();
