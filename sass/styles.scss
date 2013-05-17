@@ -7,3 +7,16 @@ img.hero {
 .copyright {
   margin-top: 40px;
 }
+
+.fb-comments {
+  width: 80% !important;
+  margin: 20px auto;
+
+  & > span, iframe {
+    width: 100% !important;
+  }
+
+  &, & > span {
+    display: block !important;
+  }
+}
