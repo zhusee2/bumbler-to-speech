@@ -20,7 +20,7 @@
     },
     d5: {
       start: 4.9,
-      duration: 0.5
+      duration: 0.6
     },
     d6: {
       start: 5.9,
@@ -95,6 +95,29 @@
         return _this.playPartial(curentIndex);
       };
       return queueIterate();
+    };
+
+    BumblerSpeech.prototype.numberToSpeechQueue = function(number) {
+      var digit1, digit10, queueArray;
+      if (number >= 100 || number < 1) {
+        return false;
+      }
+      queueArray = [];
+      digit1 = number % 10;
+      digit10 = (number - digit1) / 10;
+      if (digit10 > 0) {
+        queueArray.push("d" + digit10, "d10");
+      }
+      if (digit1 > 0) {
+        queueArray.push("d" + digit1);
+      }
+      return queueArray;
+    };
+
+    BumblerSpeech.prototype.playNumber = function(number) {
+      var speechQueue;
+      speechQueue = this.numberToSpeechQueue(number);
+      return this.playSequence(speechQueue);
     };
 
     return BumblerSpeech;

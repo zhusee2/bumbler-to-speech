@@ -3,7 +3,7 @@ AUDIO_MAP = {
   d2: {start: 1.43, duration: 0.5}
   d3: {start: 2.65, duration: 0.5}
   d4: {start: 3.55, duration: 0.5}
-  d5: {start: 4.9, duration: 0.5}
+  d5: {start: 4.9, duration: 0.6}
   d6: {start: 5.9, duration: 0.6}
   d7: {start: 6.7, duration: 0.55}
   d8: {start: 7.75, duration: 0.5}
@@ -46,6 +46,22 @@ class BumblerSpeech
       @playPartial(curentIndex)
 
     queueIterate()
+
+  numberToSpeechQueue: (number) ->
+    return false if number >= 100 or number < 1
+
+    queueArray = []
+    digit1 = number % 10
+    digit10 = (number - digit1) / 10
+
+    queueArray.push "d#{digit10}", "d10" if digit10 > 0
+    queueArray.push "d#{digit1}" if digit1 > 0
+
+    queueArray
+
+  playNumber: (number) ->
+    speechQueue = @numberToSpeechQueue(number)
+    @playSequence(speechQueue)
 
 $ ->
   window.speaker = new BumblerSpeech("#ma-speech")
