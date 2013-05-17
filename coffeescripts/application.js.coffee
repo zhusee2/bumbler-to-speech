@@ -54,7 +54,10 @@ class BumblerSpeech
     digit1 = number % 10
     digit10 = (number - digit1) / 10
 
-    queueArray.push "d#{digit10}", "d10" if digit10 > 0
+    if digit10 > 0
+      queueArray.push "d#{digit10}" if digit10 > 1
+      queueArray.push "d10"
+
     queueArray.push "d#{digit1}" if digit1 > 0
 
     queueArray
