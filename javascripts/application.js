@@ -49,7 +49,8 @@
   };
 
   defaultOptions = {
-    player: '#ma-speech'
+    player: '#ma-speech',
+    numbers: [2, 37, 69]
   };
 
   BumblerSpeech = (function() {
@@ -61,9 +62,11 @@
       }
       if (typeof options === "string") {
         this.player = document.querySelector(options);
+        this.numberQueue = [2, 37, 69];
       } else {
         mergedOptions = $.extend({}, defaultOptions, options);
         this.player = document.querySelector(mergedOptions.player);
+        this.numberQueue = mergedOptions.numbers;
       }
     }
 
@@ -89,6 +92,7 @@
         var curentIndex;
         curentIndex = indexQueue.shift();
         if (curentIndex === void 0 || null) {
+          $(_this).trigger('speechEnd');
           return false;
         }
         _this.player.addEventListener('pause', audioEventHandler);
@@ -121,6 +125,26 @@
       var speechQueue;
       speechQueue = this.numberToSpeechQueue(number);
       return this.playSequence(speechQueue);
+    };
+
+    BumblerSpeech.prototype.play = function() {
+      var queueEventHandler, queueIterate,
+        _this = this;
+      queueEventHandler = function() {
+        $(this).off('speechEnd', queueEventHandler);
+        return setTimeout(queueIterate, 300);
+      };
+      queueIterate = function() {
+        var currentNumber;
+        currentNumber = _this.numberQueue.shift();
+        if (currentNumber === void 0 || null) {
+          $(_this).trigger('queueSpeechEnd');
+          return false;
+        }
+        $(_this).on('speechEnd', queueEventHandler);
+        return _this.playNumber(currentNumber);
+      };
+      return queueIterate();
     };
 
     return BumblerSpeech;

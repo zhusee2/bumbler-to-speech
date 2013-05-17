@@ -14,15 +14,18 @@ AUDIO_MAP = {
 
 defaultOptions = {
   player: '#ma-speech'
+  numbers: [2, 37, 69]
 }
 
 class BumblerSpeech
   constructor: (options = {}) ->
     if typeof options is "string"
       @player = document.querySelector(options)
+      @numberQueue = [2, 37, 69]
     else
       mergedOptions = $.extend({}, defaultOptions, options)
       @player = document.querySelector(mergedOptions.player)
+      @numberQueue = mergedOptions.numbers
 
   playPartial: (partialIndex) ->
     partial = AUDIO_MAP[partialIndex]
@@ -40,7 +43,10 @@ class BumblerSpeech
 
     queueIterate = =>
       curentIndex = indexQueue.shift()
-      return false if curentIndex is undefined or null
+
+      if curentIndex is undefined or null
+        $(@).trigger('speechEnd')
+        return false
 
       @player.addEventListener('pause', audioEventHandler)
       @playPartial(curentIndex)
@@ -65,6 +71,23 @@ class BumblerSpeech
   playNumber: (number) ->
     speechQueue = @numberToSpeechQueue(number)
     @playSequence(speechQueue)
+
+  play: ->
+    queueEventHandler = ->
+      $(@).off('speechEnd', queueEventHandler)
+      setTimeout(queueIterate, 300)
+
+    queueIterate = =>
+      currentNumber = @numberQueue.shift()
+
+      if currentNumber is undefined or null
+        $(@).trigger('queueSpeechEnd')
+        return false
+
+      $(@).on('speechEnd', queueEventHandler)
+      @playNumber(currentNumber)
+
+    queueIterate()
 
 $ ->
   window.speaker = new BumblerSpeech("#ma-speech")
