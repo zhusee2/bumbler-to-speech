@@ -27,14 +27,17 @@ class BumblerSpeech
       @player = document.querySelector(mergedOptions.player)
       @numberQueue = mergedOptions.numbers
 
-  playPartial: (partialIndex) ->
+  playPartial: (partialIndex, rate = 1.0) ->
     partial = AUDIO_MAP[partialIndex]
     @player.currentTime = partial.start
+    @player.playbackRate = rate
     @player.play()
+
+    duration = partial.duration / rate * 1000
 
     setTimeout( =>
       @player.pause()
-    , partial.duration*1000)
+    , duration)
 
   playSequence: (indexQueue) ->
     audioEventHandler = =>
@@ -43,13 +46,17 @@ class BumblerSpeech
 
     queueIterate = =>
       currentIndex = indexQueue.shift()
+      playbackRate = 0.9
 
       if currentIndex is undefined or null
         $(@).trigger('speechEnd')
         return false
 
+      if indexQueue.length > 0
+        playbackRate = if currentIndex is "d10" then 1.55 else 1.20
+
       @player.addEventListener('pause', audioEventHandler)
-      @playPartial(currentIndex)
+      @playPartial(currentIndex, playbackRate)
 
     queueIterate()
 
@@ -115,6 +122,16 @@ $ ->
 
     if numberToPlay
       speaker.numberQueue = [1..numberToPlay]
+      speaker.numberQueue.push "thank"
+      speaker.play()
+
+    event.preventDefault()
+
+  $('#btn-countdown').on 'click', (event) ->
+    numberToPlay = checkInput()
+
+    if numberToPlay
+      speaker.numberQueue = [numberToPlay..1]
       speaker.numberQueue.push "thank"
       speaker.play()
 
