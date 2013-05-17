@@ -1,9 +1,6 @@
 body {
   padding: 20px 0;
 }
-img.hero {
-  margin-top: 60px;
-}
 .copyright {
   margin-top: 40px;
 }
@@ -18,5 +15,18 @@ img.hero {
 
   &, & > span {
     display: block !important;
+  }
+}
+
+@media (max-width: 767px) {
+  body {
+    padding: 10px;
+  }
+  input#ma-number {
+    display: block;
+    margin-bottom: 20px;
+  }
+  .fb-comments {
+    width: 100% !important;
   }
 }
