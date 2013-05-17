@@ -91,4 +91,15 @@ class BumblerSpeech
 
 $ ->
   window.speaker = new BumblerSpeech("#ma-speech")
-  console.log speaker
+  speaker.numberQueue = [1..100]
+
+  $('#btn-play').on 'click', (event) ->
+    numberToPlay = $('#ma-number').val()
+    numberToPlay = numberToPlay.match(/\d+/)
+
+    if numberToPlay? and 0 < numberToPlay < 100
+      speaker.playNumber(numberToPlay)
+    else
+      $('#ma-number').val("").focus()
+
+    event.preventDefault()

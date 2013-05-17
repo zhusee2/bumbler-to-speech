@@ -152,8 +152,24 @@
   })();
 
   $(function() {
+    var _i, _results;
     window.speaker = new BumblerSpeech("#ma-speech");
-    return console.log(speaker);
+    speaker.numberQueue = (function() {
+      _results = [];
+      for (_i = 1; _i <= 100; _i++){ _results.push(_i); }
+      return _results;
+    }).apply(this);
+    return $('#btn-play').on('click', function(event) {
+      var numberToPlay;
+      numberToPlay = $('#ma-number').val();
+      numberToPlay = numberToPlay.match(/\d+/);
+      if ((numberToPlay != null) && (0 < numberToPlay && numberToPlay < 100)) {
+        speaker.playNumber(numberToPlay);
+      } else {
+        $('#ma-number').val("").focus();
+      }
+      return event.preventDefault();
+    });
   });
 
 }).call(this);
