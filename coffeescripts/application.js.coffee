@@ -27,14 +27,15 @@ class BumblerSpeech
       @player = document.querySelector(mergedOptions.player)
       @numberQueue = mergedOptions.numbers
 
-  playPartial: (partialIndex) ->
+  playPartial: (partialIndex, rate = 1.0) ->
     partial = AUDIO_MAP[partialIndex]
     @player.currentTime = partial.start
+    @player.playbackRate = rate
     @player.play()
 
     setTimeout( =>
       @player.pause()
-    , partial.duration*1000)
+    , partial.duration / rate * 1000)
 
   playSequence: (indexQueue) ->
     audioEventHandler = =>
@@ -42,14 +43,20 @@ class BumblerSpeech
       queueIterate()
 
     queueIterate = =>
-      curentIndex = indexQueue.shift()
+      currentIndex = indexQueue.shift()
 
-      if curentIndex is undefined or null
+      if currentIndex is undefined or null
         $(@).trigger('speechEnd')
         return false
 
       @player.addEventListener('pause', audioEventHandler)
-      @playPartial(curentIndex)
+      if indexQueue.length > 0
+        if currentIndex is "d10"
+          @playPartial(currentIndex, 1.50)
+        else
+          @playPartial(currentIndex, 1.33)
+      else
+        @playPartial(currentIndex, 0.90)
 
     queueIterate()
 
