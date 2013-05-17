@@ -8,47 +8,50 @@
 </head>
 <body>
   <div class="container">
-    <h1>Bumbler to Speech</h1>
-    <p class="lead">
-      「他不笨，他是馬邦伯！」的確我們發現馬邦伯真的不笨，因為他可以從一數到十。為了推廣邦伯的數數能力，我們製作了這個線上數數器，只要輸入數字、就可以由馬邦伯幫你念出來！
-    </p>
+    <div class="row">
+      <div class="span4">
+        <img src="images/countup.jpg" width="100%" />
+      </div>
+      <div class="span6">
+        <h1>Bumbler to Speech</h1>
+        <p class="lead">
+          「他不笨，他是馬邦伯！」的確我們發現馬邦伯真的不笨，因為他可以從一數到十。為了推廣邦伯的數數能力，我們製作了這個線上數數器，只要輸入數字、就可以由馬邦伯幫你念出來！
+        </p>
 
-    <div class="fb-like" data-href="http://zhusee2.github.io/bumbler-to-speech/" data-send="true" data-width="450" data-show-faces="false"></div>
+        <div class="fb-like" data-href="http://zhusee2.github.io/bumbler-to-speech/" data-send="true" data-width="450" data-show-faces="false"></div>
 
-    <div class="well">
-      <audio id="ma-speech" controls>
-        <source src="audio/one-to-ten.mp3" type="audio/mp3">
-        <source src="audio/one-to-ten.ogg" type="audio/ogg">
-      </audio>
-    </div>
+        <div class="well">
+          <audio id="ma-speech" controls>
+            <source src="audio/one-to-ten.mp3" type="audio/mp3" />
+            <source src="audio/one-to-ten.ogg" type="audio/ogg" />
+          </audio>
+        </div>
 
-    <form action="#" class="form-inline">
-      <input type="text" id="ma-number" placeholder="請在此輸入 1~99 的數字" />
-      <input type="button" id="btn-play" class="btn btn-success" value="播放數字">
-      <input type="button" id="btn-countup" class="btn btn-warning" value="從1開始數！">
-    </form>
-
-    <div class="center">
-      <img src="images/countup.jpg" width="100%" />
+        <form action="#" class="form-inline">
+          <input type="text" id="ma-number" placeholder="請在此輸入 1~99 的數字" />
+          <input type="button" id="btn-play" class="btn btn-success" value="播放數字">
+          <input type="button" id="btn-countup" class="btn btn-warning" value="從1開始數！">
+        </form>
+      </div>
     </div>
 
     <footer>
       <p class="copyright">
         &copy; A <a href="https://twitter.com/@zhusee2">@zhusee2</a> work.
         Image courtesy of <a href="https://www.youtube.com/watch?v=SEZpdmJlvIw">UDN TV</a>. 本作品純屬惡搞及網頁前端技術學術交流之用，若感到不舒服請自覺關閉瀏覽器、並請勿認真謝謝XD</p>
-    </footer>
-  </div>
+      </footer>
+    </div>
 
-  <div id="fb-root"></div>
-  <script>(function(d, s, id) {
-    var js, fjs = d.getElementsByTagName(s)[0];
-    if (d.getElementById(id)) return;
-    js = d.createElement(s); js.id = id;
-    js.src = "//connect.facebook.net/zh_TW/all.js#xfbml=1&appId=299463133493553";
-    fjs.parentNode.insertBefore(js, fjs);
-  }(document, 'script', 'facebook-jssdk'));</script>
+    <div id="fb-root"></div>
+    <script>(function(d, s, id) {
+      var js, fjs = d.getElementsByTagName(s)[0];
+      if (d.getElementById(id)) return;
+      js = d.createElement(s); js.id = id;
+      js.src = "//connect.facebook.net/zh_TW/all.js#xfbml=1&appId=299463133493553";
+      fjs.parentNode.insertBefore(js, fjs);
+    }(document, 'script', 'facebook-jssdk'));</script>
 
-  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
-  <script src="javascripts/application.js"></script>
-</body>
-</html>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+    <script src="javascripts/application.js"></script>
+  </body>
+  </html>
