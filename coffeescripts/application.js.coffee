@@ -21,7 +21,7 @@ class BumblerSpeech
   constructor: (options = {}) ->
     if typeof options is "string"
       @player = document.querySelector(options)
-      @numberQueue = [2, 37, 69]
+      @numberQueue = []
     else
       mergedOptions = $.extend({}, defaultOptions, options)
       @player = document.querySelector(mergedOptions.player)
@@ -92,23 +92,3 @@ class BumblerSpeech
 $ ->
   window.speaker = new BumblerSpeech("#ma-speech")
   console.log speaker
-
-
-###
-document.addEventListener 'click', (event) ->
-  speaker.currentTime = AUDIO_MAP.d2.start
-  speaker.play()
-  setTimeout( ->
-    speaker.pause()
-    speaker.currentTime = AUDIO_MAP.d10.start
-    speaker.play()
-  , 500)
-  setTimeout( ->
-    speaker.pause()
-    speaker.currentTime = AUDIO_MAP.d2.start
-    speaker.play()
-  , 1000)
-  setTimeout( ->
-    speaker.pause()
-  , 1500)
-###

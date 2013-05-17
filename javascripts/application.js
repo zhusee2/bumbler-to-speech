@@ -62,7 +62,7 @@
       }
       if (typeof options === "string") {
         this.player = document.querySelector(options);
-        this.numberQueue = [2, 37, 69];
+        this.numberQueue = [];
       } else {
         mergedOptions = $.extend({}, defaultOptions, options);
         this.player = document.querySelector(mergedOptions.player);
@@ -155,25 +155,5 @@
     window.speaker = new BumblerSpeech("#ma-speech");
     return console.log(speaker);
   });
-
-  /*
-  document.addEventListener 'click', (event) ->
-    speaker.currentTime = AUDIO_MAP.d2.start
-    speaker.play()
-    setTimeout( ->
-      speaker.pause()
-      speaker.currentTime = AUDIO_MAP.d10.start
-      speaker.play()
-    , 500)
-    setTimeout( ->
-      speaker.pause()
-      speaker.currentTime = AUDIO_MAP.d2.start
-      speaker.play()
-    , 1000)
-    setTimeout( ->
-      speaker.pause()
-    , 1500)
-  */
-
 
 }).call(this);
