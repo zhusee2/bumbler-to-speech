@@ -8,7 +8,7 @@ AUDIO_MAP = {
   d7: {start: 6.7, duration: 0.55}
   d8: {start: 7.75, duration: 0.5}
   d9: {start: 8.77, duration: 0.53}
-  d10: {start: 9.52, duration: 0.7}
+  d10: {start: 9.52, duration: 0.53}
   thank: {start: 10.73, duration: 1.55}
 }
 

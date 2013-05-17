@@ -40,7 +40,7 @@
     },
     d10: {
       start: 9.52,
-      duration: 0.7
+      duration: 0.53
     },
     thank: {
       start: 10.73,
