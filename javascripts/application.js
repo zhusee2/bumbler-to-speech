@@ -89,14 +89,14 @@
         return queueIterate();
       };
       queueIterate = function() {
-        var curentIndex;
-        curentIndex = indexQueue.shift();
-        if (curentIndex === void 0 || null) {
+        var currentIndex;
+        currentIndex = indexQueue.shift();
+        if (currentIndex === void 0 || null) {
           $(_this).trigger('speechEnd');
           return false;
         }
         _this.player.addEventListener('pause', audioEventHandler);
-        return _this.playPartial(curentIndex);
+        return _this.playPartial(currentIndex);
       };
       return queueIterate();
     };

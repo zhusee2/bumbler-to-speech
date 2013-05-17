@@ -42,14 +42,14 @@ class BumblerSpeech
       queueIterate()
 
     queueIterate = =>
-      curentIndex = indexQueue.shift()
+      currentIndex = indexQueue.shift()
 
-      if curentIndex is undefined or null
+      if currentIndex is undefined or null
         $(@).trigger('speechEnd')
         return false
 
       @player.addEventListener('pause', audioEventHandler)
-      @playPartial(curentIndex)
+      @playPartial(currentIndex)
 
     queueIterate()
 
