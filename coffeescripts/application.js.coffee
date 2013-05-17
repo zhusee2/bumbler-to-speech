@@ -30,7 +30,6 @@ class BumblerSpeech
   playPartial: (partialIndex, rate = 1.0) ->
     partial = AUDIO_MAP[partialIndex]
     @player.currentTime = partial.start
-    @player.playbackRate = rate
     @player.play()
 
     duration = partial.duration / rate * 1000

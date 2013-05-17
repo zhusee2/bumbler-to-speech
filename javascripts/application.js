@@ -78,7 +78,6 @@
       }
       partial = AUDIO_MAP[partialIndex];
       this.player.currentTime = partial.start;
-      this.player.playbackRate = rate;
       this.player.play();
       duration = partial.duration / rate * 1000;
       return setTimeout(function() {
