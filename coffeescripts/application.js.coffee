@@ -1,3 +1,5 @@
+NUMS = ["", "一", "二", "三", "四", "五", "六", "七", "八", "九", "十"]
+
 AUDIO_MAP = {
   d1: {start: 0.45, duration: 0.5}
   d2: {start: 1.43, duration: 0.5}
@@ -14,6 +16,7 @@ AUDIO_MAP = {
 
 defaultOptions = {
   player: '#ma-speech'
+  caption: '.caption'
   numbers: [2, 37, 69]
 }
 
@@ -21,10 +24,12 @@ class BumblerSpeech
   constructor: (options = {}) ->
     if typeof options is "string"
       @player = document.querySelector(options)
+      @caption = document.querySelector(".caption")
       @numberQueue = []
     else
       mergedOptions = $.extend({}, defaultOptions, options)
       @player = document.querySelector(mergedOptions.player)
+      @caption = document.querySelector(mergedOptions.caption)
       @numberQueue = mergedOptions.numbers
 
   playPartial: (partialIndex, rate = 1.0) ->
@@ -60,6 +65,24 @@ class BumblerSpeech
 
     queueIterate()
 
+  showCaption: (caption) ->
+    $(@caption).text(caption)
+
+  numberToCaption: (number) ->
+    return "謝謝大家 請坐" if number is "thank"
+    return false if number >= 100 or number < 1
+
+    caption = "(邦伯式數數) "
+    digit1 = number % 10
+    digit10 = (number - digit1) / 10
+
+    if digit10 > 0
+      caption += "#{NUMS[digit10]}" if digit10 > 1
+      caption += "十"
+
+    caption += NUMS[digit1]
+    caption
+
   numberToSpeechQueue: (number) ->
     return ["thank"] if number is "thank"
     return false if number >= 100 or number < 1
@@ -77,6 +100,8 @@ class BumblerSpeech
     queueArray
 
   playNumber: (number) ->
+    caption = @numberToCaption(number)
+    @showCaption(caption)
     speechQueue = @numberToSpeechQueue(number)
     @playSequence(speechQueue)
 
