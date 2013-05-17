@@ -12,4 +12,61 @@ AUDIO_MAP = {
   thank: {start: 10.73, duration: 1.55}
 }
 
-speaker = document.querySelector("#ma-speech");
+defaultOptions = {
+  player: '#ma-speech'
+}
+
+class BumblerSpeech
+  constructor: (options = {}) ->
+    if typeof options is "string"
+      @player = document.querySelector(options)
+    else
+      mergedOptions = $.extend({}, defaultOptions, options)
+      @player = document.querySelector(mergedOptions.player)
+
+  playPartial: (partialIndex) ->
+    partial = AUDIO_MAP[partialIndex]
+    @player.currentTime = partial.start
+    @player.play()
+
+    setTimeout( =>
+      @player.pause()
+    , partial.duration*1000)
+
+  playSequence: (indexQueue) ->
+    audioEventHandler = =>
+      @player.removeEventListener('pause', audioEventHandler)
+      queueIterate()
+
+    queueIterate = =>
+      curentIndex = indexQueue.shift()
+      return false if curentIndex is undefined or null
+
+      @player.addEventListener('pause', audioEventHandler)
+      @playPartial(curentIndex)
+
+    queueIterate()
+
+$ ->
+  window.speaker = new BumblerSpeech("#ma-speech")
+  console.log speaker
+
+
+###
+document.addEventListener 'click', (event) ->
+  speaker.currentTime = AUDIO_MAP.d2.start
+  speaker.play()
+  setTimeout( ->
+    speaker.pause()
+    speaker.currentTime = AUDIO_MAP.d10.start
+    speaker.play()
+  , 500)
+  setTimeout( ->
+    speaker.pause()
+    speaker.currentTime = AUDIO_MAP.d2.start
+    speaker.play()
+  , 1000)
+  setTimeout( ->
+    speaker.pause()
+  , 1500)
+###

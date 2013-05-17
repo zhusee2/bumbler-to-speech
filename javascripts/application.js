@@ -1,5 +1,5 @@
 (function() {
-  var AUDIO_MAP, speaker;
+  var AUDIO_MAP, BumblerSpeech, defaultOptions;
 
   AUDIO_MAP = {
     d1: {
@@ -48,10 +48,62 @@
     }
   };
 
-  speaker = document.querySelector("#ma-speech");
+  defaultOptions = {
+    player: '#ma-speech'
+  };
 
-  speaker.addEventListener('timeupdate', function(event) {
-    return console.log(event.target.currentTime);
+  BumblerSpeech = (function() {
+
+    function BumblerSpeech(options) {
+      var mergedOptions;
+      if (options == null) {
+        options = {};
+      }
+      if (typeof options === "string") {
+        this.player = document.querySelector(options);
+      } else {
+        mergedOptions = $.extend({}, defaultOptions, options);
+        this.player = document.querySelector(mergedOptions.player);
+      }
+    }
+
+    BumblerSpeech.prototype.playPartial = function(partialIndex) {
+      var partial,
+        _this = this;
+      partial = AUDIO_MAP[partialIndex];
+      this.player.currentTime = partial.start;
+      this.player.play();
+      return setTimeout(function() {
+        return _this.player.pause();
+      }, partial.duration * 1000);
+    };
+
+    BumblerSpeech.prototype.playSequence = function(indexQueue) {
+      var audioEventHandler, queueIterate,
+        _this = this;
+      audioEventHandler = function() {
+        _this.player.removeEventListener('pause', audioEventHandler);
+        return queueIterate();
+      };
+      queueIterate = function() {
+        var curentIndex;
+        curentIndex = indexQueue.shift();
+        if (curentIndex === void 0 || null) {
+          return false;
+        }
+        _this.player.addEventListener('pause', audioEventHandler);
+        return _this.playPartial(curentIndex);
+      };
+      return queueIterate();
+    };
+
+    return BumblerSpeech;
+
+  })();
+
+  $(function() {
+    window.speaker = new BumblerSpeech("#ma-speech");
+    return console.log(speaker);
   });
 
   /*
