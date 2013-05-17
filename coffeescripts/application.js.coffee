@@ -151,3 +151,13 @@ $ ->
       speaker.play()
 
     event.preventDefault()
+
+  $('#btn-countdown').on 'click', (event) ->
+    numberToPlay = checkInput()
+
+    if numberToPlay
+      speaker.numberQueue = [numberToPlay..1]
+      speaker.numberQueue.push "thank"
+      speaker.play()
+
+    event.preventDefault()

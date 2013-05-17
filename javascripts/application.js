@@ -226,13 +226,27 @@ $(function() {
     }
     return event.preventDefault();
   });
-  return $('#btn-countup').on('click', function(event) {
+  $('#btn-countup').on('click', function(event) {
     var numberToPlay, _j, _results1;
     numberToPlay = checkInput();
     if (numberToPlay) {
       speaker.numberQueue = (function() {
         _results1 = [];
         for (var _j = 1; 1 <= numberToPlay ? _j <= numberToPlay : _j >= numberToPlay; 1 <= numberToPlay ? _j++ : _j--){ _results1.push(_j); }
+        return _results1;
+      }).apply(this);
+      speaker.numberQueue.push("thank");
+      speaker.play();
+    }
+    return event.preventDefault();
+  });
+  return $('#btn-countdown').on('click', function(event) {
+    var numberToPlay, _j, _results1;
+    numberToPlay = checkInput();
+    if (numberToPlay) {
+      speaker.numberQueue = (function() {
+        _results1 = [];
+        for (var _j = numberToPlay; numberToPlay <= 1 ? _j <= 1 : _j >= 1; numberToPlay <= 1 ? _j++ : _j--){ _results1.push(_j); }
         return _results1;
       }).apply(this);
       speaker.numberQueue.push("thank");
