@@ -89,17 +89,31 @@ class BumblerSpeech
 
     queueIterate()
 
+checkInput = ->
+  numberToPlay = $('#ma-number').val()
+  numberToPlay = numberToPlay.match(/\d+/)
+
+  if numberToPlay? and 0 < numberToPlay < 100
+    return numberToPlay
+  else
+    $('#ma-number').val("").focus()
+    return false
+
 $ ->
   window.speaker = new BumblerSpeech("#ma-speech")
   speaker.numberQueue = [1..100]
 
   $('#btn-play').on 'click', (event) ->
-    numberToPlay = $('#ma-number').val()
-    numberToPlay = numberToPlay.match(/\d+/)
+    numberToPlay = checkInput()
+    speaker.playNumber(numberToPlay) if numberToPlay
 
-    if numberToPlay? and 0 < numberToPlay < 100
-      speaker.playNumber(numberToPlay)
-    else
-      $('#ma-number').val("").focus()
+    event.preventDefault()
+
+  $('#btn-countup').on 'click', (event) ->
+    numberToPlay = checkInput()
+
+    if numberToPlay
+      speaker.numberQueue = [1..numberToPlay]
+      speaker.play()
 
     event.preventDefault()
