@@ -1,3 +1,5 @@
+delay = (ms, func) -> setTimeout func, ms
+
 AUDIO_MAP = {
   d1: {start: 0.45, duration: 0.5}
   d2: {start: 1.43, duration: 0.5}
@@ -22,10 +24,20 @@ class BumblerSpeech
     if typeof options is "string"
       @player = document.querySelector(options)
       @numberQueue = []
+      @playing = false
     else
       mergedOptions = $.extend({}, defaultOptions, options)
       @player = document.querySelector(mergedOptions.player)
       @numberQueue = mergedOptions.numbers
+      @playing = false
+
+    $(@).on 'speechEnd', =>
+      delay 300, =>
+        currentNumber = @numberQueue.shift()
+        if currentNumber is undefined or null
+          @playing = false
+          return
+        @playNumber(currentNumber)
 
   playPartial: (partialIndex, rate = 1.0) ->
     partial = AUDIO_MAP[partialIndex]
@@ -80,21 +92,9 @@ class BumblerSpeech
     @playSequence(speechQueue)
 
   play: ->
-    queueEventHandler = ->
-      $(@).off('speechEnd', queueEventHandler)
-      setTimeout(queueIterate, 300)
+    $(@).trigger('speechEnd') if !@playing
+    @playing = true
 
-    queueIterate = =>
-      currentNumber = @numberQueue.shift()
-
-      if currentNumber is undefined or null
-        $(@).trigger('queueSpeechEnd')
-        return false
-
-      $(@).on('speechEnd', queueEventHandler)
-      @playNumber(currentNumber)
-
-    queueIterate()
 
 checkInput = ->
   numberToPlay = $('#ma-number').val()
@@ -112,7 +112,9 @@ $ ->
 
   $('#btn-play').on 'click', (event) ->
     numberToPlay = checkInput()
-    speaker.playNumber(numberToPlay) if numberToPlay
+
+    speaker.numberQueue = [numberToPlay]
+    speaker.play()
 
     event.preventDefault()
 
