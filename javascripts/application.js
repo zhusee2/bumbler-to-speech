@@ -78,12 +78,12 @@
       $(this).on('speechEnd', function() {
         return delay(300, function() {
           var currentNumber;
-          currentNumber = speaker.numberQueue.shift();
+          currentNumber = _this.numberQueue.shift();
           if (currentNumber === void 0 || null) {
-            speaker.playing = false;
+            _this.playing = false;
             return;
           }
-          return speaker.playNumber(currentNumber);
+          return _this.playNumber(currentNumber);
         });
       });
     }

@@ -32,12 +32,12 @@ class BumblerSpeech
       @playing = false
 
     $(@).on 'speechEnd', =>
-      delay 300, ->
-        currentNumber = speaker.numberQueue.shift()
+      delay 300, =>
+        currentNumber = @numberQueue.shift()
         if currentNumber is undefined or null
-          speaker.playing = false
+          @playing = false
           return
-        speaker.playNumber(currentNumber)
+        @playNumber(currentNumber)
 
   playPartial: (partialIndex, rate = 1.0) ->
     partial = AUDIO_MAP[partialIndex]
