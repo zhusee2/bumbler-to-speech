@@ -12,7 +12,9 @@ body {
 .fb-comments {
   width: 80% !important;
   margin: 20px auto;
+}
 
+.fb_iframe_widget {
   & > span, iframe {
     width: 100% !important;
   }
@@ -30,7 +32,10 @@ body {
     display: block;
     margin-bottom: 20px;
   }
-  .fb-comments {
+}
+
+@media (max-width: 480px) {
+  .fb_iframe_widget {
     width: 100% !important;
   }
 }
