@@ -137,3 +137,15 @@ $ ->
       speaker.play()
 
     event.preventDefault()
+
+  $('#btn-digitplay').on 'click', (event) ->
+    numberToPlay = $('#ma-number').val()
+    numberToPlay = numberToPlay.match(/^[1-9]+$/)
+
+    if numberToPlay
+      seq = numberToPlay[0].replace(/([\d])/g, ",d$1").split(",")
+      seq.splice 0 1
+      speaker.numberQueue.push "thank"
+      speaker.playSequence seq
+
+    event.preventDefault()

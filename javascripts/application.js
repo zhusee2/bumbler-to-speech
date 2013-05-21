@@ -208,7 +208,7 @@
       }
       return event.preventDefault();
     });
-    return $('#btn-countdown').on('click', function(event) {
+    $('#btn-countdown').on('click', function(event) {
       var numberToPlay, _j, _results1;
       numberToPlay = checkInput();
       if (numberToPlay) {
@@ -219,6 +219,18 @@
         }).apply(this);
         speaker.numberQueue.push("thank");
         speaker.play();
+      }
+      return event.preventDefault();
+    });
+    return $('#btn-digitplay').on('click', function(event) {
+      var numberToPlay, seq;
+      numberToPlay = $('#ma-number').val();
+      numberToPlay = numberToPlay.match(/^[1-9]+$/);
+      if (numberToPlay) {
+        seq = numberToPlay[0].replace(/([\d])/g, ",d$1").split(",");
+        seq.splice(0, 1);
+        speaker.numberQueue.push("thank");
+        speaker.playSequence(seq);
       }
       return event.preventDefault();
     });
