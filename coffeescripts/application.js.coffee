@@ -50,7 +50,7 @@ class BumblerSpeech
       @player.pause()
     , duration)
 
-  playSequence: (indexQueue) ->
+  playSequence: (indexQueue, literal = false) ->
     audioEventHandler = =>
       @player.removeEventListener('pause', audioEventHandler)
       queueIterate()
@@ -65,6 +65,8 @@ class BumblerSpeech
 
       if indexQueue.length > 0
         playbackRate = if currentIndex is "d10" then 1.55 else 1.20
+
+      playbackRate = 1 if literal
 
       @player.addEventListener('pause', audioEventHandler)
       @playPartial(currentIndex, playbackRate)
@@ -108,13 +110,13 @@ checkInput = ->
 
 $ ->
   window.speaker = new BumblerSpeech("#ma-speech")
-  speaker.numberQueue = [1..100]
 
   $('#btn-play').on 'click', (event) ->
     numberToPlay = checkInput()
 
-    speaker.numberQueue = [numberToPlay]
-    speaker.play()
+    if numberToPlay
+      speaker.numberQueue = [numberToPlay]
+      speaker.play()
 
     event.preventDefault()
 
@@ -144,8 +146,8 @@ $ ->
 
     if numberToPlay
       seq = numberToPlay[0].replace(/([\d])/g, ",d$1").split(",")
-      seq.splice 0 1
-      speaker.numberQueue.push "thank"
-      speaker.playSequence seq
+      seq.splice(0, 1)
+      speaker.playSequence(seq, true)
+
 
     event.preventDefault()

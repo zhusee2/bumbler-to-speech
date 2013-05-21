@@ -103,9 +103,12 @@
       }, duration);
     };
 
-    BumblerSpeech.prototype.playSequence = function(indexQueue) {
+    BumblerSpeech.prototype.playSequence = function(indexQueue, literal) {
       var audioEventHandler, queueIterate,
         _this = this;
+      if (literal == null) {
+        literal = false;
+      }
       audioEventHandler = function() {
         _this.player.removeEventListener('pause', audioEventHandler);
         return queueIterate();
@@ -120,6 +123,9 @@
         }
         if (indexQueue.length > 0) {
           playbackRate = currentIndex === "d10" ? 1.55 : 1.20;
+        }
+        if (literal) {
+          playbackRate = 1;
         }
         _this.player.addEventListener('pause', audioEventHandler);
         return _this.playPartial(currentIndex, playbackRate);
@@ -180,28 +186,24 @@
   };
 
   $(function() {
-    var _i, _results;
     window.speaker = new BumblerSpeech("#ma-speech");
-    speaker.numberQueue = (function() {
-      _results = [];
-      for (_i = 1; _i <= 100; _i++){ _results.push(_i); }
-      return _results;
-    }).apply(this);
     $('#btn-play').on('click', function(event) {
       var numberToPlay;
       numberToPlay = checkInput();
-      speaker.numberQueue = [numberToPlay];
-      speaker.play();
+      if (numberToPlay) {
+        speaker.numberQueue = [numberToPlay];
+        speaker.play();
+      }
       return event.preventDefault();
     });
     $('#btn-countup').on('click', function(event) {
-      var numberToPlay, _j, _results1;
+      var numberToPlay, _i, _results;
       numberToPlay = checkInput();
       if (numberToPlay) {
         speaker.numberQueue = (function() {
-          _results1 = [];
-          for (var _j = 1; 1 <= numberToPlay ? _j <= numberToPlay : _j >= numberToPlay; 1 <= numberToPlay ? _j++ : _j--){ _results1.push(_j); }
-          return _results1;
+          _results = [];
+          for (var _i = 1; 1 <= numberToPlay ? _i <= numberToPlay : _i >= numberToPlay; 1 <= numberToPlay ? _i++ : _i--){ _results.push(_i); }
+          return _results;
         }).apply(this);
         speaker.numberQueue.push("thank");
         speaker.play();
@@ -209,13 +211,13 @@
       return event.preventDefault();
     });
     $('#btn-countdown').on('click', function(event) {
-      var numberToPlay, _j, _results1;
+      var numberToPlay, _i, _results;
       numberToPlay = checkInput();
       if (numberToPlay) {
         speaker.numberQueue = (function() {
-          _results1 = [];
-          for (var _j = numberToPlay; numberToPlay <= 1 ? _j <= 1 : _j >= 1; numberToPlay <= 1 ? _j++ : _j--){ _results1.push(_j); }
-          return _results1;
+          _results = [];
+          for (var _i = numberToPlay; numberToPlay <= 1 ? _i <= 1 : _i >= 1; numberToPlay <= 1 ? _i++ : _i--){ _results.push(_i); }
+          return _results;
         }).apply(this);
         speaker.numberQueue.push("thank");
         speaker.play();
@@ -229,8 +231,7 @@
       if (numberToPlay) {
         seq = numberToPlay[0].replace(/([\d])/g, ",d$1").split(",");
         seq.splice(0, 1);
-        speaker.numberQueue.push("thank");
-        speaker.playSequence(seq);
+        speaker.playSequence(seq, true);
       }
       return event.preventDefault();
     });
