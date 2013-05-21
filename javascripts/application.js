@@ -1,10 +1,10 @@
 (function() {
   var AUDIO_MAP, BumblerSpeech, checkInput, defaultOptions, delay;
-  
+
   delay = function(ms, func) {
     return setTimeout(func, ms);
   };
-  
+
   AUDIO_MAP = {
     d1: {
       start: 0.45,
@@ -51,14 +51,14 @@
       duration: 1.55
     }
   };
-  
+
   defaultOptions = {
     player: '#ma-speech',
     numbers: [2, 37, 69]
   };
-  
+
   BumblerSpeech = (function() {
-  
+
     function BumblerSpeech(options) {
       var mergedOptions,
         _this = this;
@@ -87,7 +87,7 @@
         });
       });
     }
-  
+
     BumblerSpeech.prototype.playPartial = function(partialIndex, rate) {
       var duration, partial,
         _this = this;
@@ -102,7 +102,7 @@
         return _this.player.pause();
       }, duration);
     };
-  
+
     BumblerSpeech.prototype.playSequence = function(indexQueue) {
       var audioEventHandler, queueIterate,
         _this = this;
@@ -126,7 +126,7 @@
       };
       return queueIterate();
     };
-  
+
     BumblerSpeech.prototype.numberToSpeechQueue = function(number) {
       var digit1, digit10, queueArray;
       if (number === "thank") {
@@ -149,24 +149,24 @@
       }
       return queueArray;
     };
-  
+
     BumblerSpeech.prototype.playNumber = function(number) {
       var speechQueue;
       speechQueue = this.numberToSpeechQueue(number);
       return this.playSequence(speechQueue);
     };
-  
+
     BumblerSpeech.prototype.play = function() {
       if (!this.playing) {
         $(this).trigger('speechEnd');
       }
       return this.playing = true;
     };
-  
+
     return BumblerSpeech;
-  
+
   })();
-  
+
   checkInput = function() {
     var numberToPlay;
     numberToPlay = $('#ma-number').val();
@@ -178,7 +178,7 @@
       return false;
     }
   };
-  
+
   $(function() {
     var _i, _results;
     window.speaker = new BumblerSpeech("#ma-speech");
