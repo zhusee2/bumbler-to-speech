@@ -143,11 +143,21 @@ $ ->
   $('#btn-digitplay').on 'click', (event) ->
     numberToPlay = $('#ma-number').val()
     numberToPlay = numberToPlay.match(/^[1-9]+$/)
+    $(@).popover('destroy')
 
     if numberToPlay
       seq = numberToPlay[0].replace(/([\d])/g, ",d$1").split(",")
       seq.splice(0, 1)
       speaker.playSequence(seq, true)
+
+    if $('#ma-number').val().match(/0/)
+      $(@).popover(
+        title: '念不出來...'
+        content: '很抱歉，邦伯現在還不會念「零」喔！'
+        placement: 'top'
+        trigger: 'manual'
+      )
+      $(@).popover('show')
 
 
     event.preventDefault()

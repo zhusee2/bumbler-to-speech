@@ -228,10 +228,20 @@
       var numberToPlay, seq;
       numberToPlay = $('#ma-number').val();
       numberToPlay = numberToPlay.match(/^[1-9]+$/);
+      $(this).popover('destroy');
       if (numberToPlay) {
         seq = numberToPlay[0].replace(/([\d])/g, ",d$1").split(",");
         seq.splice(0, 1);
         speaker.playSequence(seq, true);
+      }
+      if ($('#ma-number').val().match(/0/)) {
+        $(this).popover({
+          title: '念不出來...',
+          content: '很抱歉，邦伯現在還不會念「零」喔！',
+          placement: 'top',
+          trigger: 'manual'
+        });
+        $(this).popover('show');
       }
       return event.preventDefault();
     });
