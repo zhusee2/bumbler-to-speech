@@ -265,7 +265,11 @@
       }
       return event.preventDefault();
     });
-    return acceptParams();
+    return $("#ma-speech").on('canplaythrough', function() {
+      if ($("#ma-speech")[0].paused) {
+        return acceptParams();
+      }
+    });
   });
 
 }).call(this);

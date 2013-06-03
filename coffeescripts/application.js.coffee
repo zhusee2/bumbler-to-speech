@@ -178,4 +178,5 @@ $ ->
 
     event.preventDefault()
 
-  acceptParams()
+  $("#ma-speech").on 'canplaythrough', ->
+    acceptParams() if $("#ma-speech")[0].paused
