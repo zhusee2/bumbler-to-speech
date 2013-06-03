@@ -1,5 +1,5 @@
 (function() {
-  var AUDIO_MAP, BumblerSpeech, checkInput, defaultOptions, delay;
+  var AUDIO_MAP, BumblerSpeech, acceptParams, checkInput, defaultOptions, delay;
 
   delay = function(ms, func) {
     return setTimeout(func, ms);
@@ -185,6 +185,26 @@
     }
   };
 
+  acceptParams = function() {
+    var match, method, options, param, paramsArray, _i, _len;
+    paramsArray = location.search.replace(/^\?/, '').split('&');
+    options = {};
+    for (_i = 0, _len = paramsArray.length; _i < _len; _i++) {
+      param = paramsArray[_i];
+      match = param.match(/(.+)=(.+)/);
+      if (match && match.length > 2) {
+        options[match[1]] = match[2];
+      }
+    }
+    if (options.number != null) {
+      $('#ma-number').val(options.number);
+    }
+    if ((options.autoplay != null) && options.autoplay === "true") {
+      method = options.method || "countup";
+      return $("#btn-" + method).click();
+    }
+  };
+
   $(function() {
     window.speaker = new BumblerSpeech("#ma-speech");
     $('#btn-play').on('click', function(event) {
@@ -224,7 +244,7 @@
       }
       return event.preventDefault();
     });
-    return $('#btn-digitplay').on('click', function(event) {
+    $('#btn-digitplay').on('click', function(event) {
       var numberToPlay, seq;
       numberToPlay = $('#ma-number').val();
       numberToPlay = numberToPlay.match(/^[1-9]+$/);
@@ -245,6 +265,7 @@
       }
       return event.preventDefault();
     });
+    return acceptParams();
   });
 
 }).call(this);

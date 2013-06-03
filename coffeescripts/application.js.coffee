@@ -108,6 +108,22 @@ checkInput = ->
     $('#ma-number').val("").focus()
     return false
 
+acceptParams = ->
+  paramsArray = location.search.replace(/^\?/,'').split('&')
+  options = {}
+
+  for param in paramsArray
+    match = param.match(/(.+)=(.+)/)
+    options[match[1]] = match[2] if match and match.length > 2
+
+  if options.number?
+    $('#ma-number').val(options.number)
+
+  if options.autoplay? and options.autoplay is "true"
+    method = options.method || "countup"
+
+    $("#btn-#{method}").click()
+
 $ ->
   window.speaker = new BumblerSpeech("#ma-speech")
 
@@ -161,3 +177,5 @@ $ ->
 
 
     event.preventDefault()
+
+  acceptParams()
